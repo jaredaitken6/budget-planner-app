@@ -3,9 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Budget Planner</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <header>
+        <h1>Budget Planner</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Add Income/Expense</a>
+            <a href="#">Budget Limits</a>
+            <a href="#">History</a>
+            <a href="#">AI Chatbot</a>
+        </nav>
+    </header>
+    <main>
+        <section id="summary">
+            <h2>Summary</h2>
+            <p>Total Income: <span id="total-income">$0</span></p>
+            <p>Total Expenses: <span id="total-expenses">$0</span></p>
+            <p>Net Balance: <span id="net-balance">$0</span></p>
+        </section>
+        <section id="quick-add">
+            <h2>Quick Add</h2>
+            <form id="add-form">
+                <input type="text" id="title" placeholder="Title" required>
+                <input type="number" id="amount" placeholder="Amount" required>
+                <select id="category" required>
+                    <option value="food">Food</option>
+                    <option value="housing">Housing</option>
+                    <option value="transportation">Transportation</option>
+                </select>
+                <input type="date" id="date" required>
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </form>
+        </section>
+        <section id="recent-transactions">
+            <h2>Recent Transactions</h2>
+            <ul id="transactions-list"></ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
