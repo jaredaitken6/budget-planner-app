@@ -31,7 +31,8 @@ function loadTransactions() {
             transactions.push(childSnapshot.val());
         });
         updateSummary(transactions);
-        updateRecentTransactions(transactions);
+        updateRecentTransactions
+        (transactions);
     });
 }
 
