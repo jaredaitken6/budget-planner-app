@@ -1,43 +1,89 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
+
 header {
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
     text-align: center;
 }
+
 nav a {
     color: #fff;
     margin: 0 10px;
     text-decoration: none;
 }
+
 main {
     padding: 20px;
 }
+
 section {
     margin-bottom: 20px;
 }
+
 form {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+
 input, select, button {
     padding: 10px;
     font-size: 16px;
 }
+
 ul {
     list-style-type: none;
     padding: 0;
 }
+
 li {
     background-color: #fff;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    form {
+        gap: 8px;
+    }
+
+    input, select, button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    #summary {
+        text-align: center;
+    }
+
+    #summary p {
+        font-size: 1rem;
+    }
+
+    #recent-transactions h2 {
+        font-size: 1.2rem;
+    }
+
+    li {
+        font-size: 0.9rem;
+    }
 }
