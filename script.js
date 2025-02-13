@@ -1,4 +1,9 @@
-// Load transactions from Firebase when the page loads
+// Ensure Firebase is initialized first
+if (!window.database) {
+    console.error("Firebase not initialized!");
+}
+
+// Load transactions on page load
 window.onload = function () {
     loadTransactions();
 };
@@ -31,8 +36,7 @@ function loadTransactions() {
             transactions.push(childSnapshot.val());
         });
         updateSummary(transactions);
-        updateRecentTransactions
-        (transactions);
+        updateRecentTransactions(transactions);
     });
 }
 
