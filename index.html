@@ -34,6 +34,7 @@
                 <input type="text" id="title" placeholder="Title" required>
                 <input type="number" id="amount" placeholder="Amount" required>
                 <select id="category" required>
+                    <option value="income">Income</option>  <!-- ✅ Added income option -->
                     <option value="food">Food</option>
                     <option value="housing">Housing</option>
                     <option value="transportation">Transportation</option>
@@ -42,7 +43,7 @@
                 <button type="submit">Save</button>
                 <button type="reset">Cancel</button>
             </form>
-        </section>
+        </section>        
         <section id="recent-transactions">
             <h2>Recent Transactions</h2>
             <ul id="transactions-list"></ul>
