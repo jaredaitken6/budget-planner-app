@@ -30,7 +30,9 @@ document.getElementById('add-form').addEventListener('submit', (e) => {
 
 // Save transaction to Firebase
 function saveTransaction(transaction) {
-    database.ref('transactions').push(transaction)
+    const newRef = database.ref('transactions').push();
+    transaction.id = newRef.key; // ✅ Store Firebase key
+    newRef.set(transaction)
         .then(() => console.log("Transaction saved!"))
         .catch((error) => console.error("Error saving transaction:", error));
 }
@@ -40,12 +42,16 @@ function loadTransactions() {
     database.ref('transactions').on('value', (snapshot) => {
         const transactions = [];
         snapshot.forEach((childSnapshot) => {
-            transactions.push(childSnapshot.val());
+            let transaction = childSnapshot.val();
+            transaction.id = childSnapshot.key; // ✅ Get the Firebase key
+            transactions.push(transaction);
         });
+
         updateSummary(transactions);
         updateRecentTransactions(transactions);
     });
 }
+
 
 // Update summary section
 function updateSummary(transactions) {
@@ -76,7 +82,16 @@ function updateRecentTransactions(transactions) {
         <li style="color: ${t.amount >= 0 ? 'green' : 'red'};">
             <strong>${t.title}</strong>: $${Math.abs(t.amount)} (${t.category}) 
             <br><small>${new Date(t.date).toLocaleDateString()}</small>
+            <button onclick="deleteTransaction('${t.id}')">🗑️ Delete</button>
         </li>
     `).join('');
+}
+
+function deleteTransaction(id) {
+    if (!confirm("Are you sure you want to delete this transaction?")) return;
+
+    database.ref(`transactions/${id}`).remove()
+        .then(() => console.log("Transaction deleted!"))
+        .catch((error) => console.error("Error deleting transaction:", error));
 }
 
