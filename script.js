@@ -74,18 +74,41 @@ function updateSummary(transactions) {
 // Update recent transactions list
 function updateRecentTransactions(transactions) {
     if (!transactions) return;
-    const list = document.getElementById('transactions-list');
-    list.innerHTML = transactions
-        .slice(-5) // Show the last 5 transactions
-        .map(t => `<li>${t.title}: $${t.amount} (${t.category})</li>`)
-        .join('');
+
+    const list = document.getElementById("transactions-list");
+    list.innerHTML = ""; // Clear existing transactions
+
+    transactions.slice(-5).forEach((transaction) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${transaction.title}: $${transaction.amount} (${transaction.category})`;
+
+        // Create a delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.setAttribute("data-id", transaction.id);
+
+        // Attach event listener
+        deleteBtn.addEventListener("click", () => {
+            deleteTransaction(transaction.id);
+        });
+
+        // Append button to the list item
+        listItem.appendChild(deleteBtn);
+        list.appendChild(listItem);
+    });
 }
 
 function deleteTransaction(id) {
-    if (!confirm("Are you sure you want to delete this transaction?")) return;
+    const confirmDelete = confirm("Are you sure you want to delete this transaction?");
+    if (!confirmDelete) return;
 
     database.ref(`transactions/${id}`).remove()
-        .then(() => console.log("Transaction deleted!"))
+        .then(() => {
+            console.log("Transaction successfully deleted.");
+            loadTransactions(); // Refresh the UI
+        })
         .catch((error) => console.error("Error deleting transaction:", error));
 }
+
 

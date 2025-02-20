@@ -88,8 +88,19 @@ li {
     }
 }
 
-/* delete button */
-
-button {
+/* Delete button styles */
+.delete-btn {
+    background: #000000;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    margin-left: 10px;
     cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
 }
+
+.delete-btn:hover {
+    background: #414141;
+}
+
