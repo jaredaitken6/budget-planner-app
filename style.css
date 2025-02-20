@@ -87,3 +87,9 @@ li {
         font-size: 0.9rem;
     }
 }
+
+/* delete button */
+
+button {
+    cursor: pointer;
+}

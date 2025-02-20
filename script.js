@@ -33,7 +33,9 @@ function loadTransactions() {
     database.ref('transactions').on('value', (snapshot) => {
         const transactions = [];
         snapshot.forEach((childSnapshot) => {
-            transactions.push(childSnapshot.val());
+            const transaction = childSnapshot.val();
+            transaction.id = childSnapshot.key; // Store the Firebase key
+            transactions.push(transaction);
         });
         updateSummary(transactions);
         updateRecentTransactions(transactions);
@@ -60,8 +62,38 @@ function updateSummary(transactions) {
 function updateRecentTransactions(transactions) {
     if (!transactions) return;
     const list = document.getElementById('transactions-list');
-    list.innerHTML = transactions
-        .slice(-5) // Show the last 5 transactions
-        .map(t => `<li>${t.title}: $${t.amount} (${t.category})</li>`)
-        .join('');
+    list.innerHTML = ''; // Clear the list before updating
+
+    transactions.slice(-5).forEach((t) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `${t.title}: $${t.amount} (${t.category}) `;
+
+        // Create a delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.style.marginLeft = '10px';
+        deleteButton.style.backgroundColor = 'black';
+        deleteButton.style.color = 'white';
+        deleteButton.style.border = 'none';
+        deleteButton.style.padding = '5px 10px';
+        deleteButton.style.cursor = 'pointer';
+
+        // Attach event listener to delete the transaction
+        deleteButton.addEventListener('click', () => deleteTransaction(t.id));
+
+        // Append the button to the list item
+        listItem.appendChild(deleteButton);
+
+        // Add list item to the transaction list
+        list.appendChild(listItem);
+    });
+}
+
+// Delete transaction from Firebase
+function deleteTransaction(transactionId) {
+    if (confirm("Are you sure you want to delete this transaction?")) {
+        database.ref('transactions/' + transactionId).remove()
+            .then(() => console.log("Transaction deleted!"))
+            .catch((error) => console.error("Error deleting transaction:", error));
+    }
 }
