@@ -111,4 +111,6 @@ function deleteTransaction(id) {
         .catch((error) => console.error("Error deleting transaction:", error));
 }
 
+// Biometric Authentication
+
 
